@@ -2,9 +2,10 @@ import * as THREE from "three"
 
 var scene = new THREE.Scene();
 
-//var camera = new THREE.PerspectiveCamera( 40, 600, 0.99, 1000 );
+//var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 var camera =new THREE.OrthographicCamera(-100,100,100,-100,-1000,1000)
 camera.rotateY(Math.PI/4)
+//camera.rotateZ(0.3)
 
 var renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setClearColor("#fff");
@@ -54,11 +55,6 @@ var triangles=[]
 triangles.push(pyramid.geometry.vertices)
 var geo = new THREE.BoxGeometry( 8,8,8 );
 var mat = new THREE.MeshBasicMaterial( { color:"#00ff00",vertexColors: THREE.FaceColors} );
-// var cube = new THREE.Mesh( geo, mat );
-// cube.position.x=pyramid.geometry.vertices[1].x
-// cube.position.y=pyramid.geometry.vertices[1].y
-// cube.position.z=pyramid.geometry.vertices[1].z
-// scene.add(cube)
 
 var color
 var c=1
@@ -70,6 +66,7 @@ function getRandomColor() {
     }
     return color;
   }
+  var tri=[]
 for(var i=0;i<5000;i++){
     
     color=getRandomColor()
@@ -212,7 +209,7 @@ for(var i=0;i<5000;i++){
     pyr5.geometry.vertices[4]=o3
     pyr5.geometry.vertices[5]=q5
 
-    //triangles.pop()
+    tri.push(pyr2,pyr3,pyr4,pyr5)
     triangles.push(pyr1.geometry.vertices,pyr2.geometry.vertices,pyr3.geometry.vertices,pyr4.geometry.vertices,pyr5.geometry.vertices)
     scene.add(pyr1,pyr2,pyr3,pyr4,pyr5)
 }
@@ -222,7 +219,14 @@ for(var i=0;i<5000;i++){
 var render = function () {
 
     requestAnimationFrame( render );
-    camera.rotation.y+=0.01
+
+    //tri[0].rotation.x+=0.01
+    //camera.rotation.y+=0.01
+    // for(var i=0;i<tri.length;i++){
+    //     console.log("i",i)
+    //     console.log("tri[i].geometry.boundingSphere.center",tri[i])
+    //     // /ri[i].rotation.z+=0.1
+    // }
     //pyr1.rotation.x += 0.001;
    // pyramid.rotation.x += 0.01;
     renderer.render(scene, camera);
